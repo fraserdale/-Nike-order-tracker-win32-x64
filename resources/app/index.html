@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Nike order tracker - Jalfrazi</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>window.$ = window.jQuery = require('jquery');</script>
+  </head>
+  <body>
+  <form action="" style="float: left; position: absolute; margin-left: 100px" >
+    <input type="radio" name="country" value="gb"> UK <br>
+    <input type="radio" name="country" value="us" checked> US
+  </form>
+    <h1 align="center">Jalfrazi - Nike order checker</h1>
+    <div id="content">
+      <textarea placeholder="orderNumber:email" style="width: 35%; height: 100%; float: left;" id="input"></textarea>
+      <button id="b1" class="button" style="float: left; margin-left: 1%">Check Status</button>
+      <button class="button" style="float: left; margin-left: 1.5%" onclick="readTasks()">Output Results</button>
+      <textarea id="output" style="width: 35%; height: 100%; float: right"></textarea>
+    </div>
+
+    <script>
+        document.addEventListener("keydown", function (e) {
+            if (e.which === 123) {
+                require('remote').getCurrentWindow().toggleDevTools();
+            } else if (e.which === 116) {
+                location.reload();
+            }
+        });
+    </script>
+    <script>
+        var fs = require('fs');
+
+        function writeInput(data){
+            fs.writeFile("resources/app/input.txt", (data), function(err) {
+                if(err) {
+                    return console.log(err);
+                }
+                console.log("The file was saved!");
+            });
+        }
+
+        function writeLocale(data){
+            fs.writeFile("resources/app/locale.txt", (data), function(err) {
+                if(err) {
+                    return console.log(err);
+                }
+                console.log("The file was saved!");
+            });
+        }
+    </script>
+    <script>
+        fs = require('fs');
+
+        function readTasks(){
+            var data = fs.readFileSync('resources/app/output.txt', 'utf8')
+            console.log(data)
+            if(data == ""){
+                data = "Still working..."
+            }
+            $("#output").val(data)
+        }
+
+        function readInput(){
+            var data = fs.readFileSync('resources/app/input.txt', 'utf8')
+            console.log(data)
+            $("#input").val(data)
+        }
+    </script>
+    <script>
+        $(document).ready(function() {
+            readInput()
+            console.log( "document loaded" );
+            $('input').click(function() {
+                if( $('#gb').attr("checked", "checked")){
+                    writeLocale("gb")
+                }else{
+                    writeLocale("us")
+                }
+            })
+            $('#b1').click(function() {
+                if($('#input').value != ""){
+                    $('#b1').text("working...")
+                    $('#b1').css('background-color', '#EA4335')
+                    $('#b1').attr("disabled", "disabled");
+                   
+                    console.log(document.getElementById('input').value);
+                    writeInput(document.getElementById('input').value);
+                    require('./renderer.js')
+                }else{
+                    $('#input').value = "Please enter accounts in form orderNum:email"
+                }
+
+            })
+        });
+
+      // You can also require other files to run in this process
+
+    </script>
+  </body>
+</html>

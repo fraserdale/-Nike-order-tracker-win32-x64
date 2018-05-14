@@ -1,0 +1,33 @@
+* {
+    font-family: Helvetica
+}
+
+body{
+    background-color: #343434;
+    color: white;
+}
+
+#content{
+    width: 1200px;
+    height: 650px;
+    margin: 0 auto;
+}
+
+.button {
+    background-color: #74E79A;
+    color: #343434;
+    border: 0;
+    border-radius: 20px;
+    font-size: 14pt;
+    display: block;
+    margin: 0 auto;
+    margin-top: 150px;
+    padding-left: 1.5%;
+    padding-right: 1.5%;
+    cursor: pointer;
+}
+
+h1{
+    font-size: 22pt;
+    margin-top: 5px;
+}
